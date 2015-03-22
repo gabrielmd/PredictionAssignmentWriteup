@@ -42,7 +42,7 @@ data <- read.csv("pml-training.csv")
 
 First, let us observe a summary of the data:
 
-```{r, eval=FALSE}
+```{r}
 summary(data)
 ```
 
