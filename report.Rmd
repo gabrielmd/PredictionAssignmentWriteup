@@ -169,3 +169,9 @@ pml_write_files = function(outcomes){
 }
 pml_write_files(outcomes)
 ```
+
+***
+
+## Reference
+
+Source of the data:  http://groupware.les.inf.puc-rio.br/har
