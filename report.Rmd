@@ -13,6 +13,12 @@ library(caret)
 
 The goal of this report is to predict the manner in which people did their 
 exercises based on the data from wearable sensors.
+To achieve that, we use the Random Forest algorithm to build a prediction 
+model and verify which type of movements people made.
+We could observe an average accuracy of $99\%$ during the training phase and
+$99.17\%$ when testing data which had never been observed before.
+
+***
 
 ## Pre-processing
 
@@ -22,6 +28,8 @@ we set a seed value.
 ```{r}
 set.seed(1234)
 ```
+
+***
 
 ## Fetching the training data
 
@@ -37,6 +45,8 @@ download.file("https://d396qusza40orc.cloudfront.net/predmachlearn/pml-training.
               method = "curl")
 data <- read.csv("pml-training.csv")
 ```
+
+***
 
 ## Cleaning the data
 
@@ -76,6 +86,8 @@ non.numeric.values["classe"] <- TRUE # avoid removing the outcome
 subset.data <- subset.data[ , non.numeric.values]
 ```
 
+***
+
 ## Creating a model
 
 We include the option to use a cross validation during the training phase of the Random Forest algorithm.
@@ -98,6 +110,8 @@ print(fit)
 
 From the summary above, we can observe that the accuracy of the predictions was 
 around $99.0\%$ during the training phase.
+
+***
 
 ## Out of sample testing
 
@@ -126,6 +140,8 @@ ggplot(data = subset.wrong.predictions, aes(x = outcome, fill = classe)) +
 ```
 
 We can observe that there were more errors when the class was predicted to be "C". 
+
+***
 
 ## Submission
 
