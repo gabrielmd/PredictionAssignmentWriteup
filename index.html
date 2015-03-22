@@ -446,7 +446,7 @@ data &lt;- read.csv(&quot;pml-training.csv&quot;)</code></pre>
 ##  E:3607  
 ##          
 ## </code></pre>
-<p>First, we can remove the variables “X”, “user_name”, “raw_timestamp_part_1”, “raw_timestamp_part_2”, “cvtd_timestamp”, “new_window” and “num_window”, because they are only used to indentify the users and the tries, and are independent from the experiments.</p>
+<p>First, we can remove the variables “X”, “user_name”, “raw_timestamp_part_1”, “raw_timestamp_part_2”, “cvtd_timestamp”, “new_window” and “num_window”, because they are only used to indentify the users and their tries, and are independent from the experiments.</p>
 <pre class="r"><code>subset.data &lt;- data[, -c(1,2,3,4,5,6,7)]</code></pre>
 <p>As we can observe, most of the features have a high number of NA’s. Therefore, we can start the process of cleaning the data by removing the variables with less than 90% of non-NA rows from the predictions.</p>
 <pre class="r"><code>na.values &lt;- is.na(subset.data)
@@ -456,14 +456,11 @@ subset.data &lt;- subset.data[ ,(na.rates &lt; 0.1)]</code></pre>
 <p>The third step is to remove the columns after observing that they contain non-numeric data, because they also represent absence of data.</p>
 <pre class="r"><code>non.numeric.values &lt;- mapply(is.numeric, subset.data, SIMPLIFY = TRUE)
 non.numeric.values[&quot;classe&quot;] &lt;- TRUE # avoid removing the outcome
-
-subset.data &lt;- subset.data[ , non.numeric.values]
-print(class(subset.data$classe))</code></pre>
-<pre><code>## [1] &quot;factor&quot;</code></pre>
+subset.data &lt;- subset.data[ , non.numeric.values]</code></pre>
 </div>
 <div id="creating-a-model" class="section level2">
 <h2>Creating a model</h2>
-<p>Given that the Random Forest algorithms include a cross validation, we will choose a K-fold cross validation (with K = <span class="math">\(10\)</span>).</p>
+<p>We include the option to use a cross validation during the training phase of the Random Forest algorithm. It is a K-fold cross validation with K = <span class="math">\(10\)</span>.</p>
 <pre class="r"><code>trainIndex &lt;- createDataPartition(subset.data$classe, p = 0.6, list = FALSE)
 training &lt;- subset.data[trainIndex, ]
 testing &lt;- subset.data[-trainIndex, ]
@@ -496,7 +493,7 @@ print(fit)</code></pre>
 ## 
 ## Accuracy was used to select the optimal model using  the largest value.
 ## The final value used for the model was mtry = 2.</code></pre>
-<p>From the summary above, we can observe that the accuracy of the predictions was around <span class="math">\(99.5\%\)</span> during the training phase.</p>
+<p>From the summary above, we can observe that the accuracy of the predictions was around <span class="math">\(99.0\%\)</span> during the training phase.</p>
 </div>
 <div id="out-of-sample-testing" class="section level2">
 <h2>Out of sample testing</h2>
